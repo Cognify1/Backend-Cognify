@@ -5,6 +5,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 // Import routes
+import testerRoutes from "./src/routes/testerRoutes.js";
 import userRoutes from "./src/routes/userRoutes.js";
 import programRoutes from "./src/routes/programRoutes.js";
 
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // API Routes
+app.use("/api/tester", testerRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/programs", programRoutes);
 
