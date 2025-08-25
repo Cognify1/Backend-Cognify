@@ -1,12 +1,13 @@
 trigger:
   branches:
     include:
-      - '*'
+      - develop     # solo push a develop
+      - feature/*   # opcional, si quieres mover a In Progress al push
 
 pr:
   branches:
     include:
-      - develop
+      - develop     # solo PR hacia develop
 
 pool:
   vmImage: 'ubuntu-latest'
