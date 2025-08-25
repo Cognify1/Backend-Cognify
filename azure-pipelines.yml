@@ -12,8 +12,8 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  AZURE_DEVOPS_ORG: 'tu_organizacion'        # <--- Cambia por tu organización
-  AZURE_DEVOPS_PROJECT: 'tu_proyecto'        # <--- Cambia por tu proyecto
+  AZURE_DEVOPS_ORG: 'cognify-riwi'        # <--- Cambia por tu organización
+  AZURE_DEVOPS_PROJECT: 'Cognify'        # <--- Cambia por tu proyecto
   PAT: $(system.accesstoken)                 # Token de acceso (OAuth) para llamadas API
 
 jobs:
