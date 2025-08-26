@@ -1,5 +1,3 @@
-// Express server initialization with CORS and middlewares
-
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -8,12 +6,14 @@ import dotenv from "dotenv";
 import testerRoutes from "./src/routes/testerRoutes.js";
 import userRoutes from "./src/routes/userRoutes.js";
 import programRoutes from "./src/routes/programRoutes.js";
+import courseRoutes from "./src/routes/courseRoutes.js";
+import enrollmentRoutes from "./src/routes/enrollmentRoutes.js";
 
 dotenv.config();
 
 const app = express();
 
-// Middleware
+// Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -22,6 +22,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/tester", testerRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/programs", programRoutes);
+app.use("/api/courses", courseRoutes);
+app.use("/api/enrollments", enrollmentRoutes);
 
 // Start server
 const PORT = process.env.PORT || 4000;
