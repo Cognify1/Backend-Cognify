@@ -11,16 +11,28 @@ export const getCourses = async (req, res) => {
     }
 };
 
-// GET course by id
+// GET course by id including lessons
 export const getCourseById = async (req, res) => {
     const { id } = req.params;
     try {
-        const result = await pool.query(
+        const courseResult = await pool.query(
             "SELECT * FROM courses WHERE course_id = $1",
             [id]
         );
-        if (result.rows.length === 0) return res.status(404).json({ error: "Course not found" });
-        res.json(result.rows[0]);
+
+        if (courseResult.rows.length === 0)
+            return res.status(404).json({ error: "Course not found" });
+
+        const course = courseResult.rows[0];
+
+        const lessonsResult = await pool.query(
+            "SELECT * FROM lessons WHERE course_id = $1 ORDER BY order_index ASC",
+            [id]
+        );
+
+        course.lessons = lessonsResult.rows;
+
+        res.json(course);
     } catch (err) {
         console.error("Error fetching course:", err);
         res.status(500).json({ error: "Internal Server Error" });
