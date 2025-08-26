@@ -1,3 +1,5 @@
+// Database connection to Supabase (Postgres)
+
 import pkg from "pg";
 import dotenv from "dotenv";
 
