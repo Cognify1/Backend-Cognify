@@ -52,21 +52,24 @@ CREATE TABLE courses
 -- Lessons
 CREATE TABLE lessons
 (
-    lesson_id   SERIAL PRIMARY KEY,
-    course_id   INT  NOT NULL REFERENCES courses (course_id) ON DELETE CASCADE,
-    title       TEXT NOT NULL,
-    content     TEXT,
-    order_index INT
+    lesson_id    SERIAL PRIMARY KEY,
+    course_id    INT  NOT NULL REFERENCES courses (course_id) ON DELETE CASCADE,
+    title        TEXT NOT NULL,
+    content      TEXT,
+    order_index  INT,
+    duration     INT,
+    video_url    TEXT
 );
 
 -- Progress
 CREATE TABLE progress
 (
-    progress_id SERIAL PRIMARY KEY,
-    user_id     INT NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
-    lesson_id   INT NOT NULL REFERENCES lessons (lesson_id) ON DELETE CASCADE,
-    completed   BOOLEAN DEFAULT FALSE,
-    updated_at TIMESTAMPTZ DEFAULT NOW()
+    progress_id   SERIAL PRIMARY KEY,
+    user_id       INT NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
+    lesson_id     INT NOT NULL REFERENCES lessons (lesson_id) ON DELETE CASCADE,
+    completed     BOOLEAN DEFAULT FALSE,
+    updated_at    TIMESTAMPTZ DEFAULT NOW(),
+    completed_at  TIMESTAMPTZ
 );
 
 -- Resources
