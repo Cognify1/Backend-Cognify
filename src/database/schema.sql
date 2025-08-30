@@ -17,10 +17,11 @@ DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users
 (
     user_id       SERIAL PRIMARY KEY,
+    name          TEXT NOT NULL,
     email         TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
     role          TEXT NOT NULL,
-    created_at TIMESTAMPTZ DEFAULT NOW()
+    created_at    TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- Programs
@@ -37,7 +38,7 @@ CREATE TABLE enrollments
     enrollment_id SERIAL PRIMARY KEY,
     user_id       INT NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
     program_id    INT NOT NULL REFERENCES programs (program_id) ON DELETE CASCADE,
-    enrolled_at TIMESTAMPTZ DEFAULT NOW()
+    enrolled_at   TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- Courses
@@ -85,9 +86,11 @@ CREATE TABLE resources
 CREATE TABLE challenges
 (
     challenge_id SERIAL PRIMARY KEY,
-    title        TEXT NOT NULL,
-    description  TEXT,
-    difficulty   TEXT
+    difficulty   TEXT NOT NULL,
+    type         TEXT NOT NULL,
+    test_cases   JSONB NOT NULL,
+    hint         TEXT,
+    solution_url TEXT
 );
 
 -- Submissions
@@ -96,6 +99,7 @@ CREATE TABLE submissions
     submission_id SERIAL PRIMARY KEY,
     challenge_id  INT NOT NULL REFERENCES challenges (challenge_id) ON DELETE CASCADE,
     user_id       INT NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
-    solution_url  TEXT,
-    submitted_at TIMESTAMPTZ DEFAULT NOW()
+    solution_code TEXT NOT NULL,
+    passed        BOOLEAN DEFAULT FALSE,
+    submitted_at  TIMESTAMPTZ DEFAULT NOW()
 );
