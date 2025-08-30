@@ -86,6 +86,9 @@ CREATE TABLE resources
 CREATE TABLE challenges
 (
     challenge_id SERIAL PRIMARY KEY,
+    program_id   INT NOT NULL REFERENCES programs(program_id) ON DELETE CASCADE,
+    title        TEXT NOT NULL,
+    description  TEXT NOT NULL,
     difficulty   TEXT NOT NULL,
     type         TEXT NOT NULL,
     test_cases   JSONB NOT NULL,
