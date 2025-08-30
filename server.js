@@ -11,6 +11,7 @@ import enrollmentRoutes from "./src/routes/enrollmentRoutes.js";
 import lessonRoutes from "./src/routes/lessonRoutes.js";
 import progressRoutes from "./src/routes/progressRoutes.js";
 import authRoutes from "./src/routes/authRoutes.js";
+import resourceRoutes from "./src/routes/resourceRoutes.js";
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ app.use("/api/enrollments", enrollmentRoutes);
 app.use("/api/lessons", lessonRoutes);
 app.use("/api/progress", progressRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/resources", resourceRoutes);
 
 // Start server
 const PORT = process.env.PORT || 4000;
