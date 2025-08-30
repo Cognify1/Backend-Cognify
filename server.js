@@ -12,6 +12,7 @@ import lessonRoutes from "./src/routes/lessonRoutes.js";
 import progressRoutes from "./src/routes/progressRoutes.js";
 import authRoutes from "./src/routes/authRoutes.js";
 import resourceRoutes from "./src/routes/resourceRoutes.js";
+import challengeRoutes from "./src/routes/challengeRoutes.js";
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ app.use("/api/lessons", lessonRoutes);
 app.use("/api/progress", progressRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/resources", resourceRoutes);
+app.use("/api/challenges", challengeRoutes);
 
 // Start server
 const PORT = process.env.PORT || 4000;
