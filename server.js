@@ -14,6 +14,8 @@ import progressRoutes from "./src/routes/progressRoutes.js";
 import resourceRoutes from "./src/routes/resourceRoutes.js";
 import challengeRoutes from "./src/routes/challengeRoutes.js";
 import submissionRoutes from "./src/routes/submissionRoutes.js";
+import chatRoutes from "./src/routes/chatRoutes.js";
+
 
 dotenv.config();
 
@@ -36,6 +38,7 @@ app.use("/api/progress", progressRoutes);
 app.use("/api/resources", resourceRoutes);
 app.use("/api/challenges", challengeRoutes);
 app.use("/api/submissions", submissionRoutes);
+app.use("/api/chat", chatRoutes);
 
 // Start server
 const PORT = process.env.PORT || 4000;
