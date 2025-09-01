@@ -39,6 +39,25 @@ export const getCourseById = async (req, res) => {
     }
 };
 
+// GET courses by program_id
+export const getCoursesByProgramId = async (req, res) => {
+    const { programId } = req.params;
+    try {
+        const result = await pool.query(
+            "SELECT * FROM courses WHERE program_id = $1",
+            [programId]
+        );
+
+        if (result.rows.length === 0)
+            return res.status(404).json({ error: "No courses found for this program" });
+
+        res.json(result.rows);
+    } catch (err) {
+        console.error("Error fetching courses by program:", err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
 // CREATE course
 export const createCourse = async (req, res) => {
     const { title, description, program_id } = req.body;

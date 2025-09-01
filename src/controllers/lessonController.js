@@ -26,6 +26,26 @@ export const getLessonById = async (req, res) => {
     }
 };
 
+// GET lessons by course_id
+export const getLessonsByCourseId = async (req, res) => {
+    const { courseId } = req.params;
+    try {
+        const result = await pool.query(
+            "SELECT * FROM lessons WHERE course_id = $1 ORDER BY order_index ASC",
+            [courseId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: "No lessons found for this course" });
+        }
+
+        res.json(result.rows);
+    } catch (err) {
+        console.error("Error fetching lessons by course:", err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
 // CREATE lesson
 export const createLesson = async (req, res) => {
     const { course_id, title, content, order_index } = req.body;
