@@ -1,12 +1,13 @@
 # Cognify Backend
 
-Cognify is a web platform designed to provide interactive coding challenges, structured programs, and progress tracking for learners.  
+Cognify is a web platform designed to provide interactive coding challenges, structured programs, and progress tracking for learners.
+
 This repository contains the **backend implementation**, responsible for authentication, course management, challenges, submissions, and data persistence. It exposes a RESTful API that powers the entire platform.
 
 The backend is deployed on **Render** and integrates with a **PostgreSQL database hosted on Supabase**.
 
-🔗 The **frontend repository** can be found here: [Cognify Frontend](https://github.com/Cognify1/Frontend-Cognify).  
-That repository contains the actual web interface — the application that **Coders** interact with — which consumes the API provided by this backend.
+🔗 The **frontend repository** can be found here: [Cognify Frontend](https://github.com/Cognify1/Frontend-Cognify).
+> That repository contains the actual web interface — the application that **Coders** interact with — which consumes the API provided by this backend.
 
 ---
 
@@ -20,6 +21,7 @@ The backend provides a RESTful API to support the Cognify platform, enabling the
 - **Challenges & Submissions**: Coding challenges with automatic test case validation in a secure sandbox.
 - **Enrollments**: Manage student enrollment in programs.
 - **Resources**: External references and study materials.
+- **Chat AI Tutor**: Interactive AI guidance for programming questions and step-by-step reasoning.
 
 ---
 
@@ -105,6 +107,9 @@ DB_PASSWORD=your-db-password
 
 # Server
 PORT=3000
+
+# OpenAI API
+OPENAI_API_KEY=your-openai-api-key
 ```
 
 ### 4. Initialize the database
@@ -184,17 +189,6 @@ Content-Type: application/json
 ### 3. Get all programs
 ```bash
 GET /api/programs
-```
-
-### 4. Submit a challenge
-```bash
-POST /api/submissions/:challengeId
-Content-Type: application/json
-
-{
-  "user_id": 1,
-  "solution_code": "function solve(a, b) { return a + b; }"
-}
 ```
 
 ---
