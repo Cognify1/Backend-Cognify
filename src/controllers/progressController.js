@@ -51,6 +51,37 @@ export const getProgressById = async (req, res) => {
     }
 };
 
+// GET progress for a specific program and user (includes ALL lessons)
+export const getProgressByUserAndProgram = async (req, res) => {
+    const { userId, programId } = req.params;
+
+    try {
+        // Query to get ALL lessons in the program with their progress status
+        const result = await pool.query(`
+            SELECT 
+                COALESCE(p.progress_id, NULL) as progress_id,
+                $1 as user_id,
+                l.lesson_id,
+                COALESCE(p.completed, false) as completed,
+                p.completed_at,
+                p.updated_at,
+                l.title as lesson_title,
+                c.course_id,
+                c.title as course_title
+            FROM lessons l
+            INNER JOIN courses c ON l.course_id = c.course_id
+            LEFT JOIN progress p ON l.lesson_id = p.lesson_id AND p.user_id = $1
+            WHERE c.program_id = $2
+            ORDER BY c.course_id ASC, l.order_index ASC
+        `, [userId, programId]);
+
+        res.json(result.rows);
+    } catch (err) {
+        console.error("Error fetching progress by user and program:", err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
 // CREATE progress
 export const createProgress = async (req, res) => {
     const { user_id, lesson_id, completed } = req.body;
