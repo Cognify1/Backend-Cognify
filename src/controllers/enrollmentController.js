@@ -46,6 +46,35 @@ export const getEnrollmentById = async (req, res) => {
     }
 };
 
+// GET enrollments by user ID (optimized endpoint)
+export const getEnrollmentsByUserId = async (req, res) => {
+    const {userId} = req.params;
+    try {
+        const result = await pool.query(`
+            SELECT e.enrollment_id,
+                   e.user_id,
+                   u.email AS user_email,
+                   e.program_id,
+                   p.title AS program_title,
+                   e.enrolled_at
+            FROM enrollments e
+                     JOIN users u ON e.user_id = u.user_id
+                     JOIN programs p ON e.program_id = p.program_id
+            WHERE e.user_id = $1
+            ORDER BY e.enrolled_at DESC
+        `, [userId]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({error: "No enrollments found for this user"});
+        }
+
+        res.json(result.rows);
+    } catch (err) {
+        console.error("Error fetching user enrollments:", err);
+        res.status(500).json({error: "Internal Server Error"});
+    }
+};
+
 // CREATE enrollment
 export const createEnrollment = async (req, res) => {
     const {user_id, program_id} = req.body;

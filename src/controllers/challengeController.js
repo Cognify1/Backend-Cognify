@@ -44,6 +44,29 @@ export const getChallengeById = async (req, res) => {
     }
 };
 
+// GET challenges by program (optimized endpoint)
+export const getChallengesByProgram = async (req, res) => {
+    const { programId } = req.params;
+    try {
+        const result = await pool.query(
+            "SELECT * FROM challenges WHERE program_id = $1 ORDER BY challenge_id ASC",
+            [programId]
+        );
+
+        const challenges = result.rows.map(ch => ({
+            ...ch,
+            test_cases: typeof ch.test_cases === "string"
+                ? JSON.parse(ch.test_cases)
+                : ch.test_cases
+        }));
+
+        res.json(challenges);
+    } catch (err) {
+        console.error("Error fetching challenges by program:", err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
 // CREATE challenge
 export const createChallenge = async (req, res) => {
     const { program_id, title, description, difficulty, type, test_cases, hint, solution_url } = req.body;
