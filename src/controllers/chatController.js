@@ -31,7 +31,7 @@ export const chatWithOpenAI = async (req, res) => {
             ];
         }
 
-        // mensaje del usuario
+        // user message
         sessions[sessionId].push({ role: "user", content: message });
 
         const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -55,7 +55,7 @@ export const chatWithOpenAI = async (req, res) => {
         const data = await response.json();
         const reply = data.choices[0].message;
 
-        // guardamos respuesta
+        // save response
         sessions[sessionId].push(reply);
 
         return res.json(reply);
